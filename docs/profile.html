@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    
+    <link rel="stylesheet" href="css/profile.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <h2>Quiz Tournament</h2>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="result.html">Closed Quiz</a>
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="profile.html">Profile</a>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="profile-layout">
+
+            <!-- LEFT SIDE -->
+            <div class="profile-left">
+
+                <!-- Account Section -->
+                <div class="account-box">
+                    <h3>MY ACCOUNT</h3>
+
+                    <div class="user-info">
+                        <div class="profile-icon">
+                            <i class="bi bi-person-circle"></i>
+                            <i class="bi bi-pencil-fill edit-icon"></i>
+                        </div>
+
+                        <div>
+                            <h2>UserName</h2>
+                            <p>User ID : 131234285</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badges Section -->
+                <div class="badges-box">
+                    <h3>MY BADGES</h3>
+
+                    <div class="badge-content">
+                        <i class="bi bi-award-fill badge-icon"></i>
+
+                        <div>
+                            <h1>0</h1>
+                            <p>ENTHUSIAST LEVEL 1</p>
+                        </div>
+                    </div>
+
+                    <div class="points">
+                        <span>Quiz Points :</span>
+                        <span>0</span>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="profile-links">
+                    <p class="active-link">
+                        Activities on Quiz <i class="bi bi-chevron-right"></i>
+                    </p>
+                    <p>
+                        View Past Quiz Activities <i class="bi bi-chevron-right"></i>
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="profile-right">
+
+                <h2 class="activity-title">ACTIVITIES ON QUIZ</h2>
+
+                <!-- Table Header -->
+                <div class="activity-header">
+                    <span>Quiz Name</span>
+                    <span>Participated on</span>
+                    <span>Efficiency</span>
+                </div>
+
+                <!-- Activity Row -->
+                <div class="activity-row">
+                    <span>1. International Day of Yoga 2026 Quiz</span>
+                    <span>06/04/2026 12:30am</span>
+                    <span id="efficiency">56%</span>
+                </div>
+              
+                
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p class="footer-bottom">&copy; 2026 Quiz Tournament</p>
+    </footer>
+</body>
+
+</html>

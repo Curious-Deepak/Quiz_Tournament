@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaderBoard</title>
+
+    <link rel="stylesheet" href="css/leaderboard.css">
+    <script src="js/leaderboard.js" defer></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <h2>Quiz Tournament</h2>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="result.html">Closed Quiz</a>
+                <a href="leaderboard.html">Leaderboard</a>
+                <a href="profile.html">Profile</a>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="top">
+            <h2>Leaderboard</h2>
+            <h3>Analyze Your Competition, Practice and Come Stronger</h3>
+        </div>
+
+        <div class="leaderboard">
+            
+            <!-- 2nd Place Left -->
+            <div class="rank rank-2">
+                <div class="silver">RV</div>
+                <p class="name">Rajveer Singh</p>
+                <p class="score">240 PTS</p>
+                <span class="position">II</span>
+            </div>
+            <!-- 1st Place Center -->
+            <div class="rank rank-1">
+                <div class="gold">AJ</div>
+                <p class="name">Arjun Pandit</p>
+                <p class="score">451 PTS</p>
+                <span><i class="bi bi-star-fill topper"></i></span>
+                <span class="position">I</span>
+            </div>
+            <!-- 3rd Place Left -->
+            <div class="rank rank-3">
+                <div class="bronze">ER</div>
+                <p class="name">Ejoy Rana</p>
+                <p class="score">190 PTS</p>
+                <span class="position">III</span>
+            </div>
+        </div>
+
+        <nav class="tabs">
+            <span class="tab active">Overall</span>
+            <span class="tab">Today</span>
+            <span class="tab">Previous Day</span>
+            <span class="tab">This Week</span>
+        </nav>
+
+        <hr class="sec-div">
+
+        <!-- Leaderboard Table  -->
+        <div class="ranking-list">
+            <div class="list-header">
+                <span class="col-id"># SR</span>
+                <span class="col-player">Player</span>
+                <span class="col-stats">Accuracy<i class="bi bi-info-circle-fill info"></i></span>
+                <span class="col-points">Points</span>
+            </div>
+
+            <div class="list-item highlight">
+                <span class="rank-num">4.</span>
+                <div class="player-info">
+                    <div class="avatar"></div>
+                    <span class="player-name">Gaurav</span>
+                </div>
+                <span class="stats">85%</span>
+                <span class="points">210 PTS</span>
+            </div>
+
+            <div class="list-item">
+                <span class="rank-num">5.</span>
+                <div class="player-info">
+                    <div class="avatar"></div>
+                    <span class="player-name">Rohit</span>
+                </div>
+                <span class="stats">85%</span>
+                <span class="points">200 PTS</span>
+            </div>
+
+            <div class="list-item">
+                <span class="rank-num">6.</span>
+                <div class="player-info">
+                    <div class="avatar"></div>
+                    <span class="player-name">Simran</span>
+                </div>
+                <span class="stats">85%</span>
+                <span class="points">180 PTS</span>
+            </div>
+
+            <div class="list-item">
+                <span class="rank-num">7.</span>
+                <div class="player-info">
+                    <div class="avatar"></div>
+                    <span class="player-name">Aman Gupta</span>
+                </div>
+                <span class="stats">85%</span>
+                <span class="points">170 PTS</span>
+            </div>
+
+            <div class="list-item">
+                <span class="rank-num">8.</span>
+                <div class="player-info">
+                    <div class="avatar"></div>
+                    <span class="player-name">Neha Dhiman</span>
+                </div>
+                <span class="stats">85%</span>
+                <span class="points">150 PTS</span>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-bottom">&copy; 2026 Quiz Tournament</p>
+    </footer>
+
+    
+    <!-- Extra's  -->
+     <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h3 class="heading">Accuracy</h3>
+            <p>
+                Accuracy represents the percentage of correct answers given by a player.
+            </p>
+            <p class="formula"><strong>
+                Accuracy = ( Quizzes Correct Answers / Total Questions ) * 100</strong></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

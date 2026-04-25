@@ -1,0 +1,274 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global Font */
+*,
+*::before,
+*::after {
+    font-family: 'Sanchez', serif;
+}
+
+/* Body */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #f2fff4;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header / Navbar */
+header {
+    background: linear-gradient(90deg, #020617, #166534);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    padding: 15px 30px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h2 {
+    color: #90ee90;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: #f5f5f0;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: 0.3s;
+    position: relative;
+}
+
+nav a:hover {
+    color: #ff4d4d;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #90ee90;
+    left: 0;
+    bottom: -4px;
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+main {
+    flex: 10;
+}
+
+/* Layout */
+.profile-layout {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    background-color: #f5f5f0;
+}
+
+/* Left Panel */
+.profile-left {
+    width: 30%;
+}
+
+/* Right Panel */
+.profile-right {
+    width: 70%;
+}
+
+/* Account Box */
+.account-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:
+        8px 8px 16px rgba(0, 0, 0, 0.1),
+        -8px -8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.account-box h3 {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+/* User Info */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Profile Icon */
+.profile-icon {
+    position: relative;
+    font-size: 60px;
+    color: #999;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 15px;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    padding: 4px;
+}
+
+/* Badges Section */
+.badges-box {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+    color: white;
+}
+
+.badges-box h3 {
+    margin-bottom: 15px;
+}
+
+/* Badge Content */
+.badge-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.badge-icon {
+    font-size: 70px;
+}
+
+/* Points Box */
+.points {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Profile Links */
+.profile-links {
+    margin-top: 20px;
+}
+
+.profile-links p {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.active-link {
+    color: #e11d48;
+    font-weight: bold;
+}
+
+/* Activity Title */
+.activity-title {
+    color: #e11d48;
+    margin-bottom: 20px;
+}
+
+/* Activity Header */
+.activity-header {
+    display: grid;
+    grid-template-columns: 3fr 3fr 1fr;
+    align-items: center;
+    gap: 20px;
+    background: #e11d48;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    letter-spacing: 1px;
+}
+
+/* Activity Row */
+.activity-row {
+    display: grid;
+    grid-template-columns: 3fr 3fr 1fr;
+    align-items: center;
+    text-align: left;
+    gap: 20px;
+    background: #e5e5e5;
+    padding: 15px;
+    border-radius: 0 0 5px 5px;
+}
+
+/* Handle long quiz names */
+.activity-row span:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#efficiency{
+    text-align: center;
+}
+
+/* Certificate Icons */
+.cert-icons i {
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cert-icons i:hover {
+    color: #e11d48;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-layout {
+        flex-direction: column;
+    }
+
+    .profile-left,
+    .profile-right {
+        width: 100%;
+    }
+
+    .activity-header,
+    .activity-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+
+/* Footer */
+footer {
+    background: linear-gradient(90deg, #020617, #166534);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    color: #f5f5f0;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 16px;
+}
