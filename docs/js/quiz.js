@@ -26,6 +26,37 @@ function getQuizId() {
     return params.get("quizId");
 }
 
+window.onload = async function () {
+    await checkQuizStatus();
+};
+
+
+async function checkQuizStatus() {
+
+    const quizId = getQuizId();
+    const userId = 1;
+
+    try {
+        const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
+
+        if (!res.ok) throw new Error("Status API failed");
+        const data = await res.json();
+
+        if (data.submitted) {
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("result-container").style.display = "flex";
+            showResult(data.result);
+        } else {
+            fetchQuestions();
+        }
+
+    } catch (err) {
+        console.error("Status error:", err);
+        //Start
+        fetchQuestions();
+    }
+}
+
 
 // Fetch Questions
 async function fetchQuestions() {
@@ -39,9 +70,7 @@ async function fetchQuestions() {
             return;
         }
 
-
         const res = await fetch(`http://localhost:8080/questions/quiz/${quizId}`);
-
         const data = await res.json();
 
         console.log("API DATA:", data);
@@ -85,7 +114,7 @@ function init() {
     });
 
     loadQuestion(0);
-    startTimer();
+    loadTimer();
 }
 
 
@@ -179,20 +208,33 @@ function updateNavGrid() {
     });
 }
 
+// Fetch Duration 
+async function loadTimer() {
+    const quizId = getQuizId();
+
+    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
+    const quiz = await res.json();
+
+    timeRemaining = quiz.duration; 
+
+    startTimer();
+}
 
 // Timer
 function startTimer() {
     const timerDisplay = document.getElementById('timer');
 
-    timerInterval = setInterval(() => {
-        let mins = Math.floor(timeRemaining / 60);
-        let secs = timeRemaining % 60;
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
 
-        timerDisplay.innerText =
-            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    timerInterval = setInterval(() => {
 
         if (timeRemaining <= 0) {
+            timeRemaining = 0;
             clearInterval(timerInterval);
+
+            timerDisplay.innerText = "00:00";
 
             const nextBtn = document.getElementById("next-btn");
             if (!nextBtn.disabled) {
@@ -201,6 +243,12 @@ function startTimer() {
             }
             return;
         }
+
+        let mins = Math.floor(timeRemaining / 60);
+        let secs = timeRemaining % 60;
+
+        timerDisplay.innerText =
+            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 
         timeRemaining--;
 
@@ -334,6 +382,3 @@ function goToHome() {
     window.location.href = "index.html";
 }
 
-
-//  Start 
-fetchQuestions();
