@@ -397,6 +397,26 @@ button:hover {
     color: #111;
 }   
 
+/* Empty Quiz  */
+.error-container {
+    text-align: center;
+    margin-top: 100px;
+    color: black;
+}
+
+.error-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.error-btn:hover {
+    background-color: var(--dark-blue);
+}
 
 /* Footer  */
 footer {

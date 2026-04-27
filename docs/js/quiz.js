@@ -1,8 +1,3 @@
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1);
-};
-
 // No Page Reloading
 window.onbeforeunload = function (e) {
     if (!isSubmitted) {
@@ -30,7 +25,7 @@ window.onload = async function () {
     await checkQuizStatus();
 };
 
-
+// One-time Submission 
 async function checkQuizStatus() {
 
     const quizId = getQuizId();
@@ -75,9 +70,31 @@ async function fetchQuestions() {
 
         console.log("API DATA:", data);
 
+        // Empty Quiz  
         if (!data || data.length === 0) {
-            alert("No questions found!");
+            isSubmitted = true;
+
+            const questionText = document.getElementById("question-text");
+            const optionsContainer = document.getElementById("options-container");
+
+            questionText.innerText = "This quiz is currently unavailable.";
+
+            optionsContainer.innerHTML = `<div class = "error-container">
+                <p>Please try another quiz or come back later.</p>
+                <button onclick="goToHome()" class="error-btn">Go to Home</button>
+                </div>
+                `;
+
+            document.getElementById("next-btn")?.setAttribute("disabled", true);
+            document.getElementById("btn-skip")?.setAttribute("disabled", true);
+            document.getElementById("btn-back")?.setAttribute("disabled", true);
+
+            setTimeout(() => {
+                window.onbeforeunload = null;
+                window.location.replace("index.html");
+            }, 3000);
             return;
+
         }
 
         quizData = data.map(q => ({
@@ -215,7 +232,7 @@ async function loadTimer() {
     const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
     const quiz = await res.json();
 
-    timeRemaining = quiz.duration; 
+    timeRemaining = quiz.duration;
 
     startTimer();
 }
@@ -368,17 +385,20 @@ function showResult(data) {
 
         </div>
     `;
-
     resultContainer.style.display = "flex";
 }
 
 
 // Navigation 
 function goToLeaderboard() {
-    window.location.href = "leaderboard.html";
+    isSubmitted = true;
+    window.onbeforeunload = null;
+    window.location.replace ("leaderboard.html");
 }
 
 function goToHome() {
-    window.location.href = "index.html";
+    isSubmitted = true;
+    window.onbeforeunload = null;
+    window.location.replace ("index.html");
 }
 
