@@ -21,8 +21,14 @@
 
     <main>
 
-        <div class="quiz-container" id="quiz-container">
+        <div class="quiz-heading">
+            <img src="assets/q-img.png" class="quiz-logo">
+            <div>
+                <h2 id="quiz-title"></h2>
+            </div>
+        </div>
 
+        <div class="quiz-container" id="quiz-container">
 
             <div class="sidebar-nav">
 
@@ -60,10 +66,10 @@
                     </section>
 
                     <div class="controls">
-                        <button class = "btn-skip" id = "btn-skip" onclick="skipQuestion()">Skip</button>
+                        <button class="btn-skip" id="btn-skip" onclick="skipQuestion()">Skip</button>
                         <div class="right-btns">
-                            <button class = "btn-back" id = "btn-back" onclick = "prevQuestion()">Back</button>
-                            <button id = "next-btn" onclick = "nextQuestion()">Next</button>
+                            <button class="btn-back" id="btn-back" onclick="prevQuestion()">Back</button>
+                            <button id="next-btn" onclick="nextQuestion()">Next</button>
                         </div>
                     </div>
                 </div>

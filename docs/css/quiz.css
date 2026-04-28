@@ -54,9 +54,37 @@ main {
     --border-color: #dfdfdf;
 }
 
+/* Quiz Title  */
+.quiz-heading {
+    display: flex;
+    align-items: center;     
+    gap: 10px;
+    padding: 12px 20px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.quiz-logo {
+    height: 40px;                 
+    width: auto;             
+    object-fit: contain;
+}
+
+#quiz-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #5a0000, #8b0000, #b22222);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
 .sidebar-nav {
     display: flex;
-    min-height: 500px;
+    min-height: 300px;
     display: flex;
     border: 5px solid var(--border-color);    
 }
@@ -65,14 +93,14 @@ main {
 .sidebar {
     display: flex;
     flex-direction: column;
-    width: 320px;
-    padding: 20px;
+    width: 300px;
+    padding: 15px;
     border-right: 5px solid var(--border-color);
     background-color: #fff;
 }
 
 .sidebar h3 {
-    font-size: 14px;
+    font-size: 15px;
     color: #777;
     margin-bottom: 15px;
     font-weight: 500;
@@ -82,7 +110,7 @@ main {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     /* 8 columns like the image */
-    gap: 5px;
+    gap: 6px;
     margin-bottom: 20px;
 }
 
@@ -96,6 +124,7 @@ main {
     font-weight: bold;
     cursor: pointer;
     border-radius: 2px;
+    padding: 2px;
 }
 
 .grid div.answered {
@@ -161,7 +190,7 @@ main {
 .q-header-left {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
 }
 
 .q-circle {
@@ -194,10 +223,10 @@ main {
 }
 
 #question-text {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 500;
     color: var(--text-dark);
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     line-height: 1.6;
 }
 
@@ -205,10 +234,10 @@ main {
 .options-list label {
     display: flex;
     align-items: center;
-    padding: 12px;
-    margin-bottom: 8px;
+    padding: 10px;
+    margin-bottom: 2px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     transition: 0.2s;
 }
 
@@ -288,7 +317,7 @@ button:hover {
     backdrop-filter: blur(12px);
     padding: 30px;
     width: 400px;
-    border-radius: 20px;
+    border-radius: 15px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
@@ -400,7 +429,6 @@ button:hover {
 /* Empty Quiz  */
 .error-container {
     text-align: center;
-    margin-top: 100px;
     color: black;
 }
 

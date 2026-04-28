@@ -22,6 +22,7 @@ function getQuizId() {
 }
 
 window.onload = async function () {
+    loadQuizTitle();
     await checkQuizStatus();
 };
 
@@ -52,6 +53,14 @@ async function checkQuizStatus() {
     }
 }
 
+async function loadQuizTitle() {
+    const quizId = getQuizId();
+
+    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
+    const quiz = await res.json();
+
+    document.getElementById("quiz-title").innerText = quiz.title || "Loading Title ...";
+}
 
 // Fetch Questions
 async function fetchQuestions() {
@@ -130,6 +139,7 @@ function init() {
         grid.appendChild(div);
     });
 
+    loadQuizTitle();
     loadQuestion(0);
     loadTimer();
 }
@@ -393,12 +403,12 @@ function showResult(data) {
 function goToLeaderboard() {
     isSubmitted = true;
     window.onbeforeunload = null;
-    window.location.replace ("leaderboard.html");
+    window.location.replace("leaderboard.html");
 }
 
 function goToHome() {
     isSubmitted = true;
     window.onbeforeunload = null;
-    window.location.replace ("index.html");
+    window.location.replace("index.html");
 }
 
