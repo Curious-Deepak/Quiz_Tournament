@@ -2,10 +2,12 @@ async function loadQuizzes() {
 
   try {
 
-    const latestRes = await fetch("http://localhost:8080/quiz/latest");
-    const latestData = await latestRes.json();
+    const [latestRes, ongoingRes] = await Promise.all([
+      fetch("http://localhost:8080/quiz/latest"),
+      fetch("http://localhost:8080/quiz/ongoing")
+    ]);
 
-    const ongoingRes = await fetch("http://localhost:8080/quiz/ongoing");
+    const latestData = await latestRes.json();
     const ongoingData = await ongoingRes.json();
 
     renderLatestQuizzes(latestData);
@@ -122,15 +124,16 @@ function connectWebSocket() {
 
     //listen to LIVE updates
     stompClient.subscribe("/live/quizzes", function (message) {
+      console.log("Live update received");
+
       const data = JSON.parse(message.body);
 
-      console.log("Live update received", data);
-
-      renderLatestQuizzes(data);
-      renderOngoingQuizzes(data);
+      renderLatest(data.latest);
+      renderOngoing(data.ongoing);
     });
 
   }, function (error) {
     console.error("WebSocket error :", error);
   });
 }
+
