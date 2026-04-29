@@ -246,6 +246,8 @@ main {
 /* Image */
 .latest-card .quiz-image {
     display: flex;
+    width: 260px;
+    height: 180px;
     justify-content: center;
 }
 
