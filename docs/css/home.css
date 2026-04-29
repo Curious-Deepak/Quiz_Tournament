@@ -330,15 +330,25 @@ main {
 /* Body */
 .ongoing-card .card-body {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .ongoing-card .card-body h3 {
-    font-size: 18px;
+    font-size: 17px;
     margin-bottom: 4px;
 }
 
 /* Description */
 .ongoing-card .desc {
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
     font-size: 14px;
     color: #444;
     margin: 4px 0;
@@ -357,7 +367,6 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 4px 10px;
-
 }
 
 /* COMMON ELEMENTS */
@@ -410,7 +419,6 @@ main {
     font-weight: bold;
     background: #f97316;
     color: white;
-    border-radius: 20px;
     cursor: pointer;
 }
 

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadClosedQuizzes() {
     try {
-        const res = await fetch("http://localhost:8080/quiz/all");
+        const res = await fetch("http://localhost:8080/quiz/closed");
         const data = await res.json();
 
         const container = document.getElementById("quizContainer");
