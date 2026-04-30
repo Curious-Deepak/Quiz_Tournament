@@ -22,6 +22,7 @@ function getQuizId() {
     return params.get("quizId");
 }
 
+// Title and Time Fetching 
 window.onload = async function () {
     quizId = getQuizId();
     if (!quizId) return;
