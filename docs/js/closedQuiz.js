@@ -1,413 +1,72 @@
-// No Page Reloading
-window.onbeforeunload = function (e) {
-    if (!isSubmitted) {
-        e.preventDefault();
-        e.returnValue = '';
-    }
-};
+// Search Handling
+document.addEventListener("DOMContentLoaded", () => {
+    loadClosedQuizzes();
 
-let quizData = [];
-let currentIdx = 0;
-let userAnswers = [];
-let skippedQuestions = [];
-let timeRemaining = 300;
-let timerInterval = null;
-let quizId = null;
-let isSubmitted = false;
+    document.getElementById("searchInput").addEventListener("input", searchQuiz);
+});
 
-
-// Quiz from url
-function getQuizId() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("quizId");
-}
-
-// Title and Time Fetching 
-window.onload = async function () {
-    quizId = getQuizId();
-    if (!quizId) return;
-
-    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
-
-    if (!res.ok) return;
-
-    const quiz = await res.json();
-
-    document.getElementById("quiz-title").innerText = quiz.title;
-    timeRemaining = quiz.duration;
-
-    const isAlreadySubmitted = await checkQuizStatus();
-    if (isAlreadySubmitted) return;
-
-    const hasQuestions = await fetchQuestions();
-    if (hasQuestions) {
-        startTimer();
-    }
-};
-
-// One-time Submission 
-async function checkQuizStatus() {
-
-    const userId = 1;
-
+async function loadClosedQuizzes() {
     try {
-
-        const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
-
-        if (!res.ok) throw new Error("Status API failed");
-
+        const res = await fetch("http://localhost:8080/quiz/closed");
         const data = await res.json();
 
-        if (data.submitted) {
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("result-container").style.display = "flex";
-            showResult(data.result);
-            return true;
-        } 
-        return false;
+        const container = document.getElementById("quizContainer");
+        container.innerHTML = "";
 
-    } catch (err) {
-        console.error("Status error:", err);
-        return false;
-    }
-}
-
-
-// Fetch Questions
-async function fetchQuestions() {
-    try {
-
-        console.log("Quiz ID:", quizId);
-
-        if (!quizId) {
-            return;
-        }
-
-        const res = await fetch(`http://localhost:8080/questions/quiz/${quizId}`);
-        const data = await res.json();
-
-        console.log("API DATA:", data);
-
-        // Empty Quiz  
         if (!data || data.length === 0) {
-            isSubmitted = true;
-
-            const questionText = document.getElementById("question-text");
-            const optionsContainer = document.getElementById("options-container");
-
-            questionText.innerText = "This quiz is currently unavailable.";
-
-            optionsContainer.innerHTML = `<div class = "error-container">
-                <p>Please try another quiz or come back later.</p>
-                <button onclick="goToHome()" class="error-btn">Go to Home</button>
-                </div>
-                `;
-
-            document.getElementById("next-btn")?.setAttribute("disabled", true);
-            document.getElementById("btn-skip")?.setAttribute("disabled", true);
-            document.getElementById("btn-back")?.setAttribute("disabled", true);
-
-            setTimeout(() => {
-                window.onbeforeunload = null;
-                window.location.replace("index.html");
-            }, 3000);
-            return false;
-
-        }
-
-        quizData = data.map(q => ({
-            questionId: q.questionId,
-            question: q.questionText,
-            options: q.options.map(opt => opt.optionText),
-            optionIds: q.options.map(opt => opt.optionId),
-            correct: null
-        }));
-
-        userAnswers = new Array(quizData.length).fill(null);
-        skippedQuestions = new Array(quizData.length).fill(false);
-
-        init();
-        return true; 
-
-    } catch (error) {
-        console.error("Error:", error);
-        return false;
-    }
-}
-
-// INIT UI
-function init() {
-    const grid = document.getElementById('number-grid');
-    grid.innerHTML = "";
-
-    document.getElementById('total-count').innerText = quizData.length;
-
-    quizData.forEach((_, i) => {
-        const div = document.createElement('div');
-        div.innerText = i + 1;
-        div.id = `nav-${i}`;
-        div.onclick = () => jumpToQuestion(i);
-        grid.appendChild(div);
-    });
-
-    loadQuestion(0);
-}
-
-
-// Load Questions
-function loadQuestion(index) {
-    currentIdx = index;
-    const q = quizData[index];
-
-    document.getElementById('current-q-num').innerText = index + 1;
-    document.getElementById('question-text').innerText = q.question;
-
-    const optionsBox = document.getElementById('options-container');
-    optionsBox.innerHTML = "";
-
-    const optionHTML = q.options.map((opt, i) => {
-        const isChecked = userAnswers[index] === i ? 'checked' : '';
-        return `
-        <label>
-            <input type="radio" name="option" value="${i}" ${isChecked}
-            onchange="selectOption(${i})">
-            ${opt}
-        </label>
-    `;
-    }).join("");
-
-    optionsBox.innerHTML = optionHTML;
-
-    updateNavGrid();
-
-    const nextBtn = document.getElementById("next-btn");
-
-    if (index === quizData.length - 1) {
-        nextBtn.innerText = "Finish Quiz";
-        nextBtn.classList.add("finish-btn");
-    } else {
-        nextBtn.innerText = "Next";
-        nextBtn.classList.remove("finish-btn");
-    }
-}
-
-
-// Select Options
-function selectOption(optionIndex) {
-    userAnswers[currentIdx] = optionIndex;
-    skippedQuestions[currentIdx] = false;
-    updateNavGrid();
-}
-
-
-// Question Navigator
-function jumpToQuestion(i) {
-    loadQuestion(i);
-}
-
-function nextQuestion() {
-    if (currentIdx === quizData.length - 1) {
-        const nextBtn = document.getElementById("next-btn");
-        if (!nextBtn.disabled) {
-            finishQuiz();
-        }
-        return;
-    }
-    loadQuestion(currentIdx + 1);
-}
-
-// Back 
-function prevQuestion() {
-    if (currentIdx > 0) {
-        loadQuestion(currentIdx - 1);
-    }
-}
-
-// Skip
-function skipQuestion() {
-    if (userAnswers[currentIdx] === null) {
-        skippedQuestions[currentIdx] = true;
-    }
-    nextQuestion();
-}
-
-
-// Grid update 
-function updateNavGrid() {
-    quizData.forEach((_, i) => {
-        const el = document.getElementById(`nav-${i}`);
-        el.classList.remove('answered', 'skipped', 'active');
-
-        if (i === currentIdx) el.classList.add('active');
-        if (userAnswers[i] !== null) el.classList.add('answered');
-        else if (skippedQuestions[i]) el.classList.add('skipped');
-    });
-}
-
-
-// Timer
-function startTimer() {
-    const timerDisplay = document.getElementById('timer');
-
-    function updateDisplay() {
-        let mins = Math.floor(timeRemaining / 60);
-        let secs = timeRemaining % 60;
-
-        timerDisplay.innerText =
-            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-
-    updateDisplay();
-
-    if (timerInterval) clearInterval(timerInterval);
-
-    timerInterval = setInterval(() => {
-
-        if (timeRemaining <= 0) {
-            timeRemaining = 0;
-            clearInterval(timerInterval);
-
-            timerDisplay.innerText = "00:00";
-
-            const nextBtn = document.getElementById("next-btn");
-            if (!nextBtn.disabled) {
-                finishQuiz();
-            }
+            document.getElementById("noResult").style.display = "block";
             return;
         }
 
-        timeRemaining--;
-        updateDisplay();
+        data.forEach(quiz => {
+            const card = document.createElement("div");
+            card.classList.add("card");
 
-    }, 1000);
-}
+            card.innerHTML = `
+                <img src="${quiz.imageUrl}">
 
+                <div class="card-content">
+                    <div class="card-title">${quiz.title}</div>
 
-// Finish 
-async function finishQuiz() {
+                    <div class="card-duration">
+                        Duration : ${quiz.startDate} To ${quiz.endDate}
+                    </div>
 
-    if (isSubmitted) return;
-    isSubmitted = true;
+                    <button class="result-btn" onclick="viewResult(${quiz.quizId})">
+                        <i class="bi bi-trophy-fill"></i> View Result
+                    </button>
+                </div>
+            `;
 
-    const nextBtn = document.getElementById("next-btn");
-    nextBtn.disabled = true;
-
-    clearInterval(timerInterval);
-
-    const payload = {
-        quizId : quizId,
-        userId : 1, //Temporary
-        submissions : userAnswers.map((ans, i) => ({
-            questionId : quizData[i].questionId,
-            selectedOptionId : ans !== null ? quizData[i].optionIds[ans] : null
-        }))
-    };
-
-    document.getElementById("quiz-container").style.display = "none";
-    document.getElementById("result-container").style.display = "flex";
-    document.getElementById("result-container").innerHTML = `
-    <div class="result-card">
-        <p>Calculating result...</p>
-    </div>
-    `;
-
-    try {
-        const res = await fetch("http://localhost:8080/result/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
+            container.appendChild(card);
         });
 
-        if (!res.ok) {
-            throw new Error("Failed to submit quiz");
-        }
-
-        const resultData = await res.json();
-
-        showResult(resultData);
-
     } catch (error) {
-        console.error("Submit error:", error);
-
-        document.getElementById("result-container").innerHTML = `
-        <div class="result-card">
-            <p>Failed to submit quiz. Please try again.</p>
-        </div>
-    `;
+        console.error("Error loading quizzes:", error);
     }
 }
 
-
-// Result Card 
-function showResult(data) {
-
-    let message = "KEEP GOING";
-
-    if (data.accuracy >= 80) message = "EXCELLENT";
-    else if (data.accuracy >= 50) message = "GOOD JOB";
-    else if (data.accuracy >= 20) message = "NEED IMPROVEMENT";
-    else if (data.accuracy === 0) message = "TRY AGAIN AFTER PRACTICE";
-    else message = "PRACTICE MORE";
-
-    const resultContainer = document.getElementById("result-container");
-
-    resultContainer.innerHTML = `
-        <div class="result-card">
-
-            <div class="trophy">
-                <i class="bi bi-trophy-fill"></i>
-            </div>
-
-            <h1 class="points">${data.points}</h1>
-            <p class="points-label">POINTS EARNED</p>
-
-            <h2 class="message">
-                <i class="bi bi-lightning-charge-fill"></i> ${message}
-            </h2>
-
-            <div class="stats">
-                <div>
-                    <h3>${data.correct}</h3>
-                    <p><i class="bi bi-check-circle-fill correct"></i> CORRECT</p>
-                </div>
-                <div>
-                    <h3>${data.wrong}</h3>
-                    <p><i class="bi bi-x-circle-fill wrong"></i> WRONG</p>
-                </div>
-                <div>
-                    <h3>${data.accuracy}%</h3>
-                    <p><i class="bi bi-graph-up accuracy"></i> ACCURACY</p>
-                </div>
-            </div>
-
-            <div class="result-buttons">
-                <button class="btn leaderboard" onclick="goToLeaderboard()">
-                    <i class="bi bi-bar-chart-fill"></i> LEADERBOARD
-                </button>
-
-                <button class="btn play" onclick="goToHome()">
-                    <i class="bi bi-play-fill"></i> PLAY QUIZ
-                </button>
-            </div>
-
-        </div>
-    `;
-    resultContainer.style.display = "flex";
+function viewResult(quizId) {
+    window.location.href = `result-detail.html?quizId=${quizId}`;
 }
 
+function searchQuiz() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+    const noResult = document.getElementById("noResult");
 
-// Navigation 
-function goToLeaderboard() {
-    isSubmitted = true;
-    window.onbeforeunload = null;
-    window.location.replace("leaderboard.html");
+    let found = false;
+
+    cards.forEach(card => {
+        const title = card.querySelector(".card-title").innerText.toLowerCase();
+
+        if (title.includes(input)) {
+            card.style.display = "block";
+            found = true;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    noResult.style.display = found ? "none" : "block";
 }
-
-function goToHome() {
-    isSubmitted = true;
-    window.onbeforeunload = null;
-    window.location.replace("index.html");
-}
-
