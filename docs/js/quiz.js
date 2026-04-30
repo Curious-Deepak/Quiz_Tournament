@@ -12,6 +12,7 @@ let userAnswers = [];
 let skippedQuestions = [];
 let timeRemaining = 300;
 let timerInterval = null;
+let quizId = null;
 let isSubmitted = false;
 
 
@@ -22,55 +23,62 @@ function getQuizId() {
 }
 
 window.onload = async function () {
-    loadQuizTitle();
-    await checkQuizStatus();
+    quizId = getQuizId();
+    if (!quizId) return;
+
+    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
+
+    if (!res.ok) return;
+
+    const quiz = await res.json();
+
+    document.getElementById("quiz-title").innerText = quiz.title;
+    timeRemaining = quiz.duration;
+
+    const isAlreadySubmitted = await checkQuizStatus();
+    if (isAlreadySubmitted) return;
+
+    const hasQuestions = await fetchQuestions();
+    if (hasQuestions) {
+        startTimer();
+    }
 };
 
 // One-time Submission 
 async function checkQuizStatus() {
 
-    const quizId = getQuizId();
     const userId = 1;
 
     try {
+
         const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
 
         if (!res.ok) throw new Error("Status API failed");
+
         const data = await res.json();
 
         if (data.submitted) {
             document.getElementById("quiz-container").style.display = "none";
             document.getElementById("result-container").style.display = "flex";
             showResult(data.result);
-        } else {
-            fetchQuestions();
-        }
+            return true;
+        } 
+        return false;
 
     } catch (err) {
         console.error("Status error:", err);
-        //Start
-        fetchQuestions();
+        return false;
     }
 }
 
-async function loadQuizTitle() {
-    const quizId = getQuizId();
-
-    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
-    const quiz = await res.json();
-
-    document.getElementById("quiz-title").innerText = quiz.title || "Loading Title ...";
-}
 
 // Fetch Questions
 async function fetchQuestions() {
     try {
-        const quizId = getQuizId();
 
         console.log("Quiz ID:", quizId);
 
         if (!quizId) {
-            alert("Quiz ID missing in URL");
             return;
         }
 
@@ -102,7 +110,7 @@ async function fetchQuestions() {
                 window.onbeforeunload = null;
                 window.location.replace("index.html");
             }, 3000);
-            return;
+            return false;
 
         }
 
@@ -118,9 +126,11 @@ async function fetchQuestions() {
         skippedQuestions = new Array(quizData.length).fill(false);
 
         init();
+        return true; 
 
     } catch (error) {
         console.error("Error:", error);
+        return false;
     }
 }
 
@@ -139,9 +149,7 @@ function init() {
         grid.appendChild(div);
     });
 
-    loadQuizTitle();
     loadQuestion(0);
-    loadTimer();
 }
 
 
@@ -207,12 +215,12 @@ function nextQuestion() {
     loadQuestion(currentIdx + 1);
 }
 
+// Back 
 function prevQuestion() {
     if (currentIdx > 0) {
         loadQuestion(currentIdx - 1);
     }
 }
-
 
 // Skip
 function skipQuestion() {
@@ -235,25 +243,22 @@ function updateNavGrid() {
     });
 }
 
-// Fetch Duration 
-async function loadTimer() {
-    const quizId = getQuizId();
-
-    const res = await fetch(`http://localhost:8080/quiz/${quizId}`);
-    const quiz = await res.json();
-
-    timeRemaining = quiz.duration;
-
-    startTimer();
-}
 
 // Timer
 function startTimer() {
     const timerDisplay = document.getElementById('timer');
 
-    if (timerInterval) {
-        clearInterval(timerInterval);
+    function updateDisplay() {
+        let mins = Math.floor(timeRemaining / 60);
+        let secs = timeRemaining % 60;
+
+        timerDisplay.innerText =
+            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
+
+    updateDisplay();
+
+    if (timerInterval) clearInterval(timerInterval);
 
     timerInterval = setInterval(() => {
 
@@ -265,19 +270,13 @@ function startTimer() {
 
             const nextBtn = document.getElementById("next-btn");
             if (!nextBtn.disabled) {
-                alert("Time's up!");
                 finishQuiz();
             }
             return;
         }
 
-        let mins = Math.floor(timeRemaining / 60);
-        let secs = timeRemaining % 60;
-
-        timerDisplay.innerText =
-            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-
         timeRemaining--;
+        updateDisplay();
 
     }, 1000);
 }
@@ -295,11 +294,11 @@ async function finishQuiz() {
     clearInterval(timerInterval);
 
     const payload = {
-        quizId: getQuizId(),
-        userId: 1, //Temporary
-        submissions: userAnswers.map((ans, i) => ({
-            questionId: quizData[i].questionId,
-            selectedOptionId: ans !== null ? quizData[i].optionIds[ans] : null
+        quizId : quizId,
+        userId : 1, //Temporary
+        submissions : userAnswers.map((ans, i) => ({
+            questionId : quizData[i].questionId,
+            selectedOptionId : ans !== null ? quizData[i].optionIds[ans] : null
         }))
     };
 
@@ -343,7 +342,6 @@ async function finishQuiz() {
 // Result Card 
 function showResult(data) {
 
-    // Message 
     let message = "KEEP GOING";
 
     if (data.accuracy >= 80) message = "EXCELLENT";
