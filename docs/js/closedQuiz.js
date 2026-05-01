@@ -47,7 +47,7 @@ async function loadClosedQuizzes() {
 }
 
 function viewResult(quizId) {
-    window.location.href = `result-detail.html?quizId=${quizId}`;
+    window.location.href = `result.html?quizId=${quizId}`;
 }
 
 function searchQuiz() {
