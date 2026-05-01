@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    font-family: 'Sanchez', serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* Body */
+body {
+    background-color: #f2fff4;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header / Navbar */
+header {
+    background: linear-gradient(90deg, #020617, #166534);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+}
+
+h2 {
+    color: #90ee90;
+    letter-spacing: 1px;
+}
+
+/* Main */
+main {
+    flex: 1;
+    padding: 30px 10px;
+}
+
+/* Quiz Title  */
+.quiz-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.quiz-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+#quiz-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #5a0000, #8b0000, #b22222);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Result  */
+.result-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: rgb(248, 243, 215);
+    border-radius: 10px;
+    border: 3px solid #444;
+}
+
+.result-left {
+    flex: 1;
+    display: flex;
+    padding: 30px;
+    max-width: 450px;
+    justify-content: center;
+    align-items: center;
+    border-right: 3px solid #444;
+}
+
+.trophy i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+    color: #fbbf24;
+    margin-bottom: 20px;
+}
+
+/* POINTS */
+.points {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    font-weight: bold;
+    color: #16a34a;
+    margin: 5px 0;
+}
+
+.points-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* MESSAGE */
+.message {
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    color: #ef4444;
+    margin-bottom: 30px;
+}
+
+/* STATS */
+.stats {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px;
+    justify-content: center;
+    text-align: center;
+}
+
+.stats h3 {
+    font-size: 26px;
+    margin-bottom: 5px;
+    color: #0f172a;
+}
+
+.stats p {
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 1px;
+}
+
+.stats i {
+    margin-right: 4px;
+    font-size: 16px;
+}
+
+/* COLORS */
+.correct {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}
+
+.accuracy {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* Btns  */
+.result-buttons {
+    display: flex;
+    gap: 25px;
+    width: 100%;
+}
+
+.btn {
+    flex: 1;
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(10px);
+    background-color: gold;
+}
+
+.leaderboard {
+    background: #22c55e;
+    color: #111;
+}
+
+.play {
+    background: #9d84ea;
+    color: #111;
+}
+
+/* Certificate  */
+.result-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.certificate-box {
+    text-align: center;
+}
+
+.certificate-box .icon {
+    font-size: 90px;
+    color: #c89b3c;
+    margin-bottom: 20px;
+}
+
+.certificate-box .ribbon {
+    display: inline-block;
+    background: linear-gradient(90deg, #c89b3c, #f5d06f, #c89b3c);
+    color: #333;
+    padding: 10px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* TEXT */
+.certificate-box h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #8a6d1a;
+}
+
+.certificate-box p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* BUTTON */
+.certificate-box button {
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 1px;
+    background: #2563eb;
+    color: whitesmoke;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.certificate-box button:hover {
+    background: #1e40af;
+    transform: translateY(-4px);
+}
+
+/* NOTE */
+.certificate-box .note {
+    background: rgba(0, 123, 255, 0.1);
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #444;
+    display: inline-block;
+}
+
+.quote-box {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 5px solid gold;
+    border-right: 5px solid gold;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    font-style: italic;
+}
+
+.quote-icon {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 14px;
+    color: gold;
+}
+
+.quote-text {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #444;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(90deg, #020617, #166534);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    color: #f5f5f0;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 15px;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .result-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
