@@ -1,11 +1,5 @@
-window.onbeforeunload = function () {
-    sessionStorage.removeItem("quizResult");
-};
-
-
 let quizId = null;
 let userId = 1;
-let isSubmitted = true;
 
 window.onload = async function () {
 
@@ -14,9 +8,38 @@ window.onload = async function () {
 
     if (!quizId) return;
 
+    const container = document.getElementById("result-container");
+    container.innerHTML = `
+        <div class="result-card">
+            <p>Loading result...</p>
+        </div>
+    `;
+
     await loadQuizTitle();
     await loadResult();
+    connectWebSocket();
 };
+
+function connectWebSocket() {
+
+    const socket = new SockJS("http://localhost:8080/ws");
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function () {
+
+        console.log("WebSocket Connected");
+
+        stompClient.subscribe(`/live/result/${quizId}/${userId}`, function (message) {
+
+            const data = JSON.parse(message.body);
+
+            renderResultPage(data);
+        });
+
+    }, function (error) {
+        console.error("WebSocket error :", error);
+    });
+}
 
 async function loadQuizTitle() {
     try {
@@ -30,19 +53,9 @@ async function loadQuizTitle() {
     }
 }
 
-async function loadResult() {
+async function loadResult(retryCount = 3) {
 
-    document.getElementById("result-container").innerHTML = `
-    <div class="result-card">
-        <p>Loading result...</p>
-    </div>
-    `;
-
-    document.getElementById("certificate-container").innerHTML = `
-    <div class="certificate-box">
-        <p>Preparing certificate...</p>
-    </div>
-    `;
+    const container = document.getElementById("result-container");
 
     try {
         const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
@@ -51,19 +64,32 @@ async function loadResult() {
 
         const data = await res.json();
 
-        if (!data.submitted || !data.result) {
-            document.getElementById("result-container").innerHTML = `
-        <div class="result-card">
-            <p>No result found. Please attempt the quiz first.</p>
-        </div>
-        `;
+        if (data.submitted && data.result) {
+            renderResultPage(data.result);
             return;
         }
 
-        renderResultPage(data.result);
+        if (retryCount > 0) {
+            setTimeout(() => {
+                loadResult(retryCount - 1);
+            }, 1000);
+        } else {
+            container.innerHTML = `
+                <div class="result-card">
+                    <p>Result not available yet. Please try again.</p>
+                </div>
+            `;
+        }
 
     } catch (err) {
-        console.error("Result fetch error:", err);
+        console.error("Result fetch error :", err);
+
+        const container = document.getElementById("result-container");
+        container.innerHTML = `
+        <div class="result-card">
+            <p>Error loading result. Please try again.</p>
+        </div>
+    `;
     }
 }
 

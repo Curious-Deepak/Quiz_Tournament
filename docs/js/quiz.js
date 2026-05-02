@@ -58,12 +58,12 @@ async function checkQuizStatus() {
 
         const data = await res.json();
 
-        if (data.submitted) {
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("result-container").style.display = "flex";
-            showResult(data.result);
+        if (data.submitted) { 
+            isSubmitted = true;  
+            window.onbeforeunload = null;       
+            window.location.replace(`result.html?quizId=${quizId}`);
             return true;
-        } 
+        }
         return false;
 
     } catch (err) {
@@ -127,7 +127,7 @@ async function fetchQuestions() {
         skippedQuestions = new Array(quizData.length).fill(false);
 
         init();
-        return true; 
+        return true;
 
     } catch (error) {
         console.error("Error:", error);
@@ -295,21 +295,13 @@ async function finishQuiz() {
     clearInterval(timerInterval);
 
     const payload = {
-        quizId : quizId,
-        userId : 1, //Temporary
-        submissions : userAnswers.map((ans, i) => ({
-            questionId : quizData[i].questionId,
-            selectedOptionId : ans !== null ? quizData[i].optionIds[ans] : null
+        quizId: quizId,
+        userId: 1, //Temporary
+        submissions: userAnswers.map((ans, i) => ({
+            questionId: quizData[i].questionId,
+            selectedOptionId: ans !== null ? quizData[i].optionIds[ans] : null
         }))
     };
-
-    document.getElementById("quiz-container").style.display = "none";
-    document.getElementById("result-container").style.display = "flex";
-    document.getElementById("result-container").innerHTML = `
-    <div class="result-card">
-        <p>Calculating result...</p>
-    </div>
-    `;
 
     try {
         const res = await fetch("http://localhost:8080/result/submit", {
@@ -324,9 +316,9 @@ async function finishQuiz() {
             throw new Error("Failed to submit quiz");
         }
 
-        const resultData = await res.json();
+        await res.json();
 
-        showResult(resultData);
+        window.location.replace(`result.html?quizId=${quizId}`);
 
     } catch (error) {
         console.error("Submit error:", error);
@@ -339,75 +331,8 @@ async function finishQuiz() {
     }
 }
 
-
-// Result Card 
-function showResult(data) {
-
-    let message = "KEEP GOING";
-
-    if (data.accuracy >= 80) message = "EXCELLENT";
-    else if (data.accuracy >= 50) message = "GOOD JOB";
-    else if (data.accuracy >= 20) message = "NEED IMPROVEMENT";
-    else if (data.accuracy === 0) message = "TRY AGAIN AFTER PRACTICE";
-    else message = "PRACTICE MORE";
-
-    const resultContainer = document.getElementById("result-container");
-
-    resultContainer.innerHTML = `
-        <div class="result-card">
-
-            <div class="trophy">
-                <i class="bi bi-trophy-fill"></i>
-            </div>
-
-            <h1 class="points">${data.points}</h1>
-            <p class="points-label">POINTS EARNED</p>
-
-            <h2 class="message">
-                <i class="bi bi-lightning-charge-fill"></i> ${message}
-            </h2>
-
-            <div class="stats">
-                <div>
-                    <h3>${data.correct}</h3>
-                    <p><i class="bi bi-check-circle-fill correct"></i> CORRECT</p>
-                </div>
-                <div>
-                    <h3>${data.wrong}</h3>
-                    <p><i class="bi bi-x-circle-fill wrong"></i> WRONG</p>
-                </div>
-                <div>
-                    <h3>${data.accuracy}%</h3>
-                    <p><i class="bi bi-graph-up accuracy"></i> ACCURACY</p>
-                </div>
-            </div>
-
-            <div class="result-buttons">
-                <button class="btn leaderboard" onclick="goToLeaderboard()">
-                    <i class="bi bi-bar-chart-fill"></i> LEADERBOARD
-                </button>
-
-                <button class="btn play" onclick="goToHome()">
-                    <i class="bi bi-play-fill"></i> PLAY QUIZ
-                </button>
-            </div>
-
-        </div>
-    `;
-    resultContainer.style.display = "flex";
-}
-
-
-// Navigation 
-function goToLeaderboard() {
-    isSubmitted = true;
-    window.onbeforeunload = null;
-    window.location.replace("leaderboard.html");
-}
-
 function goToHome() {
     isSubmitted = true;
     window.onbeforeunload = null;
     window.location.replace("index.html");
 }
-
