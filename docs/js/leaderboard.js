@@ -19,6 +19,11 @@ function renderLeaderboard(data) {
     const topContainer = document.querySelector(".leaderboard");
     const listContainer = document.querySelector(".ranking-list");
 
+    if (!topContainer || !listContainer) {
+        console.error("Data for containers not found !");
+        return;
+    }
+
     if (!data || data.length === 0) {
         listContainer.innerHTML = "<p>No data available</p>";
         return;
@@ -27,11 +32,16 @@ function renderLeaderboard(data) {
     // TOP 3
     const top3 = data.slice(0, 3);
 
-    const podium = [top3[1], top3[0], top3[2]];
+    const podium = [
+        top3[1] || null,
+        top3[0] || null,
+        top3[2] || null
+    ];
 
     topContainer.innerHTML = podium.map((user, index) => {
 
-        // index now represents position in UI (not rank)
+        if (!user) return "";
+
         const medal = index === 0 ? "silver" : index === 1 ? "gold" : "bronze";
         const rankClass = index === 0 ? "rank-2" : index === 1 ? "rank-1" : "rank-3";
         const position = index === 0 ? "II" : index === 1 ? "I" : "III";
