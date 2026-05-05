@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeaderBoard</title>
@@ -9,9 +10,17 @@
     <link rel="stylesheet" href="css/leaderboard.css">
     <script src="js/leaderboard.js" defer></script>
 
+    <!-- Login Check  -->
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            protectPage();
+            handleNavProtection();
+        });
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 
 </head>
 
@@ -51,7 +60,7 @@
 
         <!-- Leaderboard Table  -->
         <div class="ranking-list">
-        
+
         </div>
     </main>
 

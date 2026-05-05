@@ -1,3 +1,36 @@
+// Login Check
+function isLoggedIn() {
+  return localStorage.getItem("token") !== null;
+}
+
+function handlePlay(quizId) {
+
+  if (!isLoggedIn()) {
+    window.location.href = "login.html";
+    return;
+  }
+  window.location.href = `quiz.html?quizId=${quizId}`;
+
+}
+
+function createPlayButton(quizId) {
+
+  const loggedIn = isLoggedIn();
+  const btnText = "Play";
+
+  const btnAction = loggedIn
+    ? `handlePlay(${quizId})`
+    : `window.location.href='login.html'`;
+
+  return `
+    <button onclick="${btnAction}" class="btn btn-secondary">
+    ${btnText}
+    </button>
+  `;
+  
+}
+
+
 async function loadQuizzes() {
 
   try {
@@ -57,7 +90,7 @@ function createLatestQuizCard(q) {
           <p><strong>End :</strong> ${q.endDate}</p>
         </div>
 
-        <button onclick="location.href='quiz.html?quizId=${q.quizId}'" class="btn btn-secondary">Play</button>
+        ${createPlayButton(q.quizId)}
       </div>
 
     </div>
@@ -92,7 +125,7 @@ function createOngoingQuizCard(q) {
           <span class="limelight">${q.duration}</span> Sec
         </div>
 
-        <button onclick="location.href='quiz.html?quizId=${q.quizId}'" class="btn play-btn">Play</button>
+        ${createPlayButton(q.quizId)}
 
         <p class="author">Organizer : ${q.author}</p>
       </div>
