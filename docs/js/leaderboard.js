@@ -69,6 +69,7 @@ function renderLeaderboard(data) {
         <div class="list-header">
             <span class="col-id"># SR</span>
             <span class="col-player">Player</span>
+            <span class="col-qcount">Quiz Count</span>
             <span class="col-stats">
                 <i class="bi bi-info-circle-fill info"></i> Accuracy
             </span>
@@ -84,6 +85,7 @@ function renderLeaderboard(data) {
                     <div class="avatar"></div>
                     <span class="player-name">${user.playerName}</span>
                 </div>
+                <span class="q-stats">${user.qcount}</span>
                 <span class="stats">${user.accuracy}%</span>
                 <span class="points">${user.points} PTS</span>
             </div>

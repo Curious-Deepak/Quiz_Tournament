@@ -143,7 +143,9 @@ main {
 }
 
 /* Avatar */
-.gold, .silver, .bronze {
+.gold,
+.silver,
+.bronze {
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -251,13 +253,13 @@ main {
 .ranking-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 /* Header */
 .list-header {
     display: grid;
-    grid-template-columns: 150px 2fr 1fr 1fr;
+    grid-template-columns: 120px 2fr 1fr 1fr 1fr;
     gap: 30px;
     padding: 15px 20px;
     margin-bottom: 8px;
@@ -272,11 +274,12 @@ main {
 /* Row */
 .list-item {
     display: grid;
-    grid-template-columns: 150px 2fr 1fr 1fr;
+    grid-template-columns: 120px 2fr 1fr 1fr 1fr;
     align-items: center;
     gap: 20px;
     padding: 15px 20px;
     border-radius: 10px;
+    letter-spacing: 1px;
     background: rgba(0, 0, 0, 0.04);
     color: #111;
     transition: 0.25s;
@@ -294,7 +297,7 @@ main {
     font-weight: bold;
     color: #000000;
     text-align: left;
-    padding-left: 50px;
+    padding-left: 20px;
 }
 
 /* Player */
@@ -326,16 +329,23 @@ main {
     color: #111;
 }
 
-.stats{
+.q-stats {
+    text-align: center;
+    font-weight: 600;
+    color: #111;
+}
+
+.stats {
     text-align: center;
     font-weight: 600;
     color: #111;
 }
 
 .col-id {
-    padding-left: 40px;
+    padding-left: 10px;
 }
 
+.col-qcount ,
 .col-stats {
     display: flex;
     align-items: center;
@@ -343,6 +353,7 @@ main {
 }
 
 .col-points {
+    padding-right: 10px;
     text-align: right;
     justify-self: end;
 }
@@ -423,9 +434,9 @@ footer {
     line-height: 30px;
 }
 
-.heading{
-margin-bottom: 5px;
-text-align: center;
+.heading {
+    margin-bottom: 5px;
+    text-align: center;
 }
 
 /* Animation */
@@ -434,6 +445,7 @@ text-align: center;
         transform: scale(0.8);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
@@ -448,4 +460,3 @@ text-align: center;
     font-size: 30px;
     cursor: pointer;
 }
-
