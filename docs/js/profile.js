@@ -1,7 +1,18 @@
-const userId = 1;
+function getAuthHeaders() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.href = "login.html";
+    }
+
+    return {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+    };
+}
 
 window.onload = () => {
-    
+
     loadProfile();
     loadActivities("active");
 
@@ -23,7 +34,9 @@ window.onload = () => {
 
 async function loadProfile() {
     try {
-        const res = await fetch(`http://localhost:8080/profile?userId=${userId}`);
+        const res = await fetch("http://localhost:8080/profile", {
+            headers: getAuthHeaders()
+        });
         const data = await res.json();
 
         document.getElementById("user-name").innerText = data.fullName || "N/A";
@@ -45,7 +58,9 @@ async function loadActivities(type = "past") {
 
         setActiveTab(type);
 
-        const res = await fetch(`http://localhost:8080/profile/activities?userId=${userId}&type=${type}`);
+        const res = await fetch(`http://localhost:8080/profile/activities?type=${type}`, {
+            headers: getAuthHeaders()
+        });
         const data = await res.json();
 
         renderActivities(data);

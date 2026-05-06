@@ -15,6 +15,20 @@ let timerInterval = null;
 let quizId = null;
 let isSubmitted = false;
 
+// Authentication 
+function getAuthHeaders() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return null;
+    }
+
+    return {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+    };
+}
 
 // Quiz from url
 function getQuizId() {
@@ -48,19 +62,24 @@ window.onload = async function () {
 // One-time Submission 
 async function checkQuizStatus() {
 
-    const userId = 1;
 
     try {
 
-        const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
+        const headers = getAuthHeaders();
+        if (!headers) return;
+
+        const res = await fetch(
+            `http://localhost:8080/result/status?quizId=${quizId}`,
+            { headers }
+        );
 
         if (!res.ok) throw new Error("Status API failed");
 
         const data = await res.json();
 
-        if (data.submitted) { 
-            isSubmitted = true;  
-            window.onbeforeunload = null;       
+        if (data.submitted) {
+            isSubmitted = true;
+            window.onbeforeunload = null;
             window.location.replace(`result.html?quizId=${quizId}`);
             return true;
         }
@@ -83,7 +102,14 @@ async function fetchQuestions() {
             return;
         }
 
-        const res = await fetch(`http://localhost:8080/questions/quiz/${quizId}`);
+        const headers = getAuthHeaders();
+        if (!headers) return;
+
+        const res = await fetch(
+            `http://localhost:8080/questions/quiz/${quizId}`,
+            { headers }
+        );
+
         const data = await res.json();
 
         console.log("API DATA:", data);
@@ -296,7 +322,6 @@ async function finishQuiz() {
 
     const payload = {
         quizId: quizId,
-        userId: 1, //Temporary
         submissions: userAnswers.map((ans, i) => ({
             questionId: quizData[i].questionId,
             selectedOptionId: ans !== null ? quizData[i].optionIds[ans] : null
@@ -304,11 +329,12 @@ async function finishQuiz() {
     };
 
     try {
+        const headers = getAuthHeaders();
+        if (!headers) return;
+
         const res = await fetch("http://localhost:8080/result/submit", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(payload)
         });
 
@@ -336,3 +362,4 @@ function goToHome() {
     window.onbeforeunload = null;
     window.location.replace("index.html");
 }
+

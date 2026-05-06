@@ -1,7 +1,30 @@
 let quizId = null;
-let userId = 1;
+let userId = null;
+
+function getUserFromToken() {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        return {
+            userId: payload.userId || null,
+            email: payload.sub || payload.email
+        };
+    } catch (e) {
+        console.error("Invalid token", e);
+        return null;
+    }
+}
 
 window.onload = async function () {
+
+    const user = getUserFromToken();
+    if (!user) {
+        return;
+    }
+
+    userId = user.userId;
 
     const params = new URLSearchParams(window.location.search);
     quizId = params.get("quizId");
@@ -30,15 +53,28 @@ function connectWebSocket() {
         console.log("WebSocket Connected");
 
         stompClient.subscribe(`/live/result/${quizId}/${userId}`, function (message) {
-
             const data = JSON.parse(message.body);
-
             renderResultPage(data);
         });
 
     }, function (error) {
         console.error("WebSocket error :", error);
     });
+}
+
+// Authentication 
+function getAuthHeaders() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return null;
+    }
+
+    return {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+    };
 }
 
 async function loadQuizTitle() {
@@ -58,7 +94,14 @@ async function loadResult(retryCount = 3) {
     const container = document.getElementById("result-container");
 
     try {
-        const res = await fetch(`http://localhost:8080/result/status?quizId=${quizId}&userId=${userId}`);
+
+        const headers = getAuthHeaders();
+        if (!headers) return;
+
+        const res = await fetch(
+            `http://localhost:8080/result/status?quizId=${quizId}`,
+            { headers }
+        );
 
         if (!res.ok) throw new Error("Failed to fetch result");
 
@@ -200,3 +243,4 @@ function goToHome() {
 function downloadCertificate() {
     alert("Download feature coming soon");
 }
+
