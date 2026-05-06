@@ -470,7 +470,15 @@ main {
 }
 
 .top-icon {
+    display: inline-block;
     transform: scaleX(-1);
+}
+
+
+.quote-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .tagline {
