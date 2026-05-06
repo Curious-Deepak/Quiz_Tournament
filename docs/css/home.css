@@ -190,16 +190,6 @@ main {
 
 }
 
-/* Generic Container */
-.container-box {
-    background-color: white;
-    border-left: 5px solid #90ee90;
-    padding: 20px;
-    margin: 20px auto;
-    width: 60%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 /* Section Container */
 .quiz-section {
     margin-top: 40px;
@@ -216,14 +206,15 @@ main {
 .section-divider {
     margin: 40px 0;
     height: 2px;
-    background: #6c6b6b;
+    background: #777;
     border: none;
 }
 
 /* COMMON CARD BASE */
 .quiz-card {
+    border-top: 2px solid #2ded2d;
     background: #f3f3f3da;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
@@ -449,49 +440,78 @@ main {
     background-color: #2879e2;
 }
 
-/* Footer */
+
+/* End Section */
+#ongoingSection {
+    border-bottom: 2px solid #666;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+}
+
+.end-section {
+    height: 150px;
+    padding: 20px;
+    background-color: greenyellow;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow:
+        4px 4px 8px rgba(11, 11, 11, 0.4),
+        -4px -4px 8px rgba(11, 11, 11, 0.4);
+}
+
+.blockquote {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+}
+
+.top-icon {
+    transform: scaleX(-1);
+}
+
+.tagline {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 1.6;
+}
+
 .f-result {
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
 .q-result {
-    display: inline-block;
-    background: transparent;
-    border: 1px solid white;
-    padding: 10px 10px;
-    color: white;
-    transition: 0.3s;
+    display: flex;
+    padding: 15px 20px;
+    border: 1px solid #444;
+    color: black;
     text-decoration: none;
     border-radius: 10px;
-    font-weight: 600;
+    font-weight: bold;
     letter-spacing: 1px;
-    font-size: 14px;
+    gap:10px;
+    font-size: 16px;
 }
 
-.q-result i {
+.f-result i{
+    font-size: 18px;
+}
+
+.q-result:hover,
+.f-result i:hover {
+    background-color: red;
     color: white;
+    transition: 0.7s;
 }
 
-.q-result:hover i {
-    color: rgb(0, 0, 0);
-}
-
-.f-result a:hover {
-    background-color: gold;
-    color: rgb(0, 0, 0);
-}
-
-.copyright {
-    position: static;
-    text-align: center;
-    flex: 1;
-}
-
+/* Footer  */
 footer {
-    display: flex;
-    align-items: center;
-    position: relative;
+    text-align: center;
     background: linear-gradient(90deg, #020617, #166534);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     color: #f5f5f0;
