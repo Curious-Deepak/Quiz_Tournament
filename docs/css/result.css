@@ -268,6 +268,42 @@ main {
     transform: translateY(-4px);
 }
 
+/* No result in results */
+.no-result {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 15px;
+    padding: 5px;
+    gap: 20px;
+}
+
+.no-result p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #3a2f00;
+}
+
+.go-home-btn {
+    text-align: center;
+    gap: 60px;
+    padding: 6px;
+    border: none;
+    border-radius: 8px;
+    background: #FFD700;
+    color: #3a2f00;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+
+.go-home-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-1px);
+}
+
 /* NOTE */
 .certificate-box .note {
     background: rgba(0, 123, 255, 0.1);

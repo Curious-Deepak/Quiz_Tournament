@@ -453,7 +453,6 @@ main {
     padding: 20px;
     background-color: greenyellow;
     border-radius: 10px;
-    transition: all 0.3s ease;
     box-shadow:
         4px 4px 8px rgba(11, 11, 11, 0.4),
         -4px -4px 8px rgba(11, 11, 11, 0.4);
@@ -483,8 +482,7 @@ main {
 
 .tagline {
     font-weight: bold;
-    font-size: 24px;
-    line-height: 1.6;
+    font-size: 22px;
 }
 
 .f-result {
@@ -495,7 +493,7 @@ main {
 
 .q-result {
     display: flex;
-    padding: 15px 20px;
+    padding: 10px;
     border: 1px solid #444;
     color: black;
     text-decoration: none;
@@ -514,7 +512,7 @@ main {
 .f-result i:hover {
     background-color: red;
     color: white;
-    transition: 0.7s;
+    transition: 0.6s ease;
 }
 
 /* Footer  */

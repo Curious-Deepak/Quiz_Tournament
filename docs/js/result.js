@@ -32,9 +32,18 @@ window.onload = async function () {
     if (!quizId) return;
 
     const container = document.getElementById("result-container");
+    const certificateContainer = document.getElementById("certificate-container");
+
     container.innerHTML = `
-        <div class="result-card">
-            <p>Loading result...</p>
+    <div class="no-result">
+        <p>No result available or quiz time is over.</p>
+    </div>
+    `;
+
+    certificateContainer.innerHTML = `
+    <div class="no-result">
+        <p>This quiz is closed, attempt another quiz.</p>
+        <button class="go-home-btn" onclick="goToHome()">Play Quiz</button>
         </div>
     `;
 
@@ -91,7 +100,10 @@ async function loadQuizTitle() {
 
 async function loadResult(retryCount = 3) {
 
+    let firstLoad = true;
+
     const container = document.getElementById("result-container");
+    const certificateContainer = document.getElementById("certificate-container");
 
     try {
 
@@ -116,23 +128,14 @@ async function loadResult(retryCount = 3) {
             setTimeout(() => {
                 loadResult(retryCount - 1);
             }, 1000);
-        } else {
-            container.innerHTML = `
-                <div class="result-card">
-                    <p>Result not available yet. Please try again.</p>
-                </div>
-            `;
+            return;
         }
+
+        showNoResultState(container, certificateContainer);
 
     } catch (err) {
         console.error("Result fetch error :", err);
-
-        const container = document.getElementById("result-container");
-        container.innerHTML = `
-        <div class="result-card">
-            <p>Error loading result. Please try again.</p>
-        </div>
-    `;
+        showNoResultState(container, certificateContainer);
     }
 }
 
@@ -242,5 +245,22 @@ function goToHome() {
 
 function downloadCertificate() {
     alert("Download feature coming soon");
+}
+
+// No result Messages 
+function showNoResultState(container, certificateContainer) {
+
+    container.innerHTML = `
+        <div class="no-result">
+            <p>No result available or quiz time is over.</p>
+        </div>
+    `;
+
+    certificateContainer.innerHTML = `
+        <div class="no-result">
+            <p>This quiz is closed, attempt another quiz.</p>
+            <button class="go-home-btn" onclick="goToHome()">Play Quiz</button>
+        </div>
+    `;
 }
 
