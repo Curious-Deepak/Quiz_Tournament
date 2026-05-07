@@ -217,6 +217,13 @@ button:hover {
     z-index: 2;
 }
 
+/* Error Msg  */
+.error-text{
+    color: red;
+    text-align: center;
+    min-height: 10px;
+}
+
 
 @media (max-width: 768px) {
 
