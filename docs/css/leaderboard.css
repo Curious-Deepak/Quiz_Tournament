@@ -396,6 +396,24 @@ main {
     }
 }
 
+/* No-Data in nav-tabs */
+.no-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color:  #ff2f00;
+    width: fit-content;
+    padding: 15px;
+    border-radius: 10px;
+    height: 35px;
+    margin: 0 auto;
+    color: whitesmoke;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* Footer */
 footer {
     background: linear-gradient(90deg, #020617, #166534);

@@ -25,7 +25,13 @@ function renderLeaderboard(data) {
     }
 
     if (!data || data.length === 0) {
-        listContainer.innerHTML = "<p>No data available</p>";
+
+        listContainer.innerHTML = `
+        <div class="no-data">
+            No data available for selected option
+        </div>
+        `;
+
         return;
     }
 
@@ -99,14 +105,20 @@ function renderLeaderboard(data) {
 
 }
 
-// TAB SWITCH
+// Tab switching with filtering 
 const tabs = document.querySelectorAll(".tab");
 
 tabs.forEach(tab => {
+
     tab.addEventListener("click", () => {
+
         tabs.forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
+        const filter = tab.dataset.filter;
+
+        loadLeaderboard(filter);
     });
+
 });
 
 
@@ -192,3 +204,4 @@ function applyAvatars() {
         avatar.style.backgroundColor = getColorFromName(name);
     });
 }
+
