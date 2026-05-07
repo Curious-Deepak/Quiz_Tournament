@@ -31,7 +31,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
         document.getElementById("loginEmail").value = "";
         document.getElementById("loginPassword").value = "";
-        
+
         document.getElementById("loginEmail").style.border = "1px solid red";
         document.getElementById("loginPassword").style.border = "1px solid red";
     }
@@ -78,7 +78,6 @@ document.getElementById("signupForm").addEventListener("submit", async function 
 // Switch
 function showSignup() {
     document.getElementById("container").classList.add("signup");
-
     document.getElementById("loginForm").reset();
 
     document.getElementById("loginError").innerText = "";
@@ -86,7 +85,6 @@ function showSignup() {
 
 function showLogin() {
     document.getElementById("container").classList.remove("signup");
-
     document.getElementById("signupForm").reset();
 
     document.getElementById("signupError").innerText = "";
