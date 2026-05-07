@@ -84,8 +84,15 @@ function renderLeaderboard(data) {
     `;
 
     rest.forEach(user => {
+
+        let highlightClass = "";
+
+        if (user.rank === 4) {
+            highlightClass = "highlight";
+        }
+
         html += `
-            <div class="list-item">
+            <div class="list-item ${highlightClass}">
                 <span class="rank-num">${user.rank}.</span>
                 <div class="player-info">
                     <div class="avatar"></div>

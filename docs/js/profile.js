@@ -127,3 +127,11 @@ function setActiveTab(type) {
     }
 }
 
+
+// Logout
+function logout() {
+    localStorage.removeItem("token");
+    window.location.replace("login.html");
+}
+
+

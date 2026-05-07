@@ -215,7 +215,43 @@ main {
 /* Activity Title */
 .activity-title {
     color: #e11d48;
+    margin: 0;
+    line-height: 1;
+}
+
+.activity-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+}
+
+/* Logout */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    background: #19fd19;
+    color: #111;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.logout-btn i {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.logout-btn:hover {
+    color: white;
+    background:  #e11d48;
+    transform: translateY(-5px);
 }
 
 /* Activity Header */
