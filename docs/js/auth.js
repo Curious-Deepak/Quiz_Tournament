@@ -2,7 +2,30 @@ protectPage();
 
 function protectPage() {
 
-    if (localStorage.getItem("token") === null) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    try {
+
+        const payload = JSON.parse(atob(token.split('.')[1]));
+
+        const currentTime = Date.now() / 1000;
+
+        if (payload.exp < currentTime) {
+
+            localStorage.removeItem("token");
+
+            alert("Session expired. Please login again.");
+            window.location.replace("login.html");
+        }
+
+    } catch (error) {
+
+        localStorage.removeItem("token");
         window.location.replace("login.html");
     }
 }
