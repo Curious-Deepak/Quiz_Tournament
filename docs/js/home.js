@@ -3,15 +3,39 @@ function isLoggedIn() {
   return localStorage.getItem("token") !== null;
 }
 
-function handlePlay(quizId) {
+async function handlePlay(quizId) {
 
   if (!isLoggedIn()) {
-    window.location.href = "login.html";
+    window.location.replace("login.html");
     return;
   }
-  window.location.href = `quiz.html?quizId=${quizId}`;
 
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(
+      `http://localhost:8080/result/status?quizId=${quizId}`,
+      {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.submitted) {
+      window.location.replace(`result.html?quizId=${quizId}`);
+    } else {
+      window.location.replace(`t&c.html?quizId=${quizId}`);
+    }
+
+  } catch (error) {
+    console.error("Error checking quiz status !!", error);
+  }
+  
 }
+
 
 function createPlayButton(quizId) {
 
@@ -20,14 +44,14 @@ function createPlayButton(quizId) {
 
   const btnAction = loggedIn
     ? `handlePlay(${quizId})`
-    : `window.location.href='login.html'`;
+    : `window.location.replace('login.html')`;
 
   return `
     <button onclick="${btnAction}" class="btn btn-secondary">
     ${btnText}
     </button>
   `;
-  
+
 }
 
 
@@ -76,7 +100,10 @@ function createLatestQuizCard(q) {
 
         <div class="quiz-extra">
           <span><i class="bi bi-file-earmark-text cert-icon"></i> E-Certificate</span>
-          <span><i class="bi bi-info-circle info-icon"></i> T&C</span>
+          <span class="tnc-link"
+          onclick="window.location.replace('t&c.html?quizId=${q.quizId}')">
+          <i class="bi bi-info-circle info-icon"></i> T&C
+        </span>
         </div>
 
         <p class="author">Organizer : ${q.author}</p>

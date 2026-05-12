@@ -280,6 +280,10 @@ main {
     font-size: 15px;
 }
 
+.tnc-link {
+    cursor: pointer;
+}
+
 
 /* ONGOING QUIZ (GRID CARDS) */
 

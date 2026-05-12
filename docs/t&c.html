@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions</title>
+
+    <link rel="stylesheet" href="css/t&c.css">
+    <script src="js/t&c.js" defer></script>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            protectPage();
+            handleNavProtection();
+        });
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+    <header>
+        <h2>Quiz Hub</h2>
+    </header>
+
+    <main>
+        <!-- Title  -->
+        <div class="quiz-heading">
+            <img src="assets/q-img.png" class="quiz-logo">
+            <div>
+                <h2 id="quiz-title"></h2>
+            </div>
+        </div>
+
+        <!-- Quiz Card -->
+        <div class="quiz-desc">
+
+            <div class="quiz-card">
+
+                <!-- Left -->
+                <div class="quiz-image-section">
+                    <img id="quiz-image" alt="Quiz Image">
+                </div>
+
+                <!-- Right -->
+                <div class="quiz-info-section">
+
+                    <div class="quiz-dates">
+
+                        <p>
+                            <i class="bi bi-calendar-event"></i>
+                            <span id="start-date">Start Date</span>
+                        </p>
+
+                        <p>
+                            <i class="bi bi-calendar-check"></i>
+                            <span id="end-date">End Date</span>
+                        </p>
+
+                    </div>
+
+                    <div class="quiz-details">
+
+                        <p>
+                            Questions
+                            <span id="question-count"></span>
+                        </p>
+
+                        <p>
+                            Duration
+                            <span id="quiz-duration"></span>
+                        </p>
+
+                    </div>
+
+                    <button id="play-btn" class="play-btn">
+                        Play Quiz
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="terms-heading">
+            <h2 id="tc-title">Terms & Conditions</h2>
+        </div>
+
+        <div class="terms-container">
+
+            <!-- Left Side -->
+            <div class="terms-column">
+
+                <div class="term-box">
+                    <p>
+                        <strong>1.&nbsp;</strong>
+                        Do not refresh or close the quiz window during the test.
+                        /
+                        क्विज़ के दौरान पेज को रिफ्रेश या बंद न करें।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>2.&nbsp;</strong>
+                        Each question carries equal marks, and marks will be deducted for wrong answers.
+                        /
+                        प्रत्येक प्रश्न समान अंक का होगा तथा गलत उत्तरों पर अंक काटे जाएंगे।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>3.&nbsp;</strong>
+                        Submit the quiz before the timer ends.
+                        /
+                        टाइमर समाप्त होने से पहले क्विज़ सबमिट करें।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>4.&nbsp;</strong>
+                        Internet interruption may affect quiz progress.
+                        /
+                        इंटरनेट रुकने से क्विज़ प्रभावित हो सकता है।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>5.&nbsp;</strong>
+                        Quiz results are generated automatically.
+                        /
+                        क्विज़ परिणाम स्वचालित रूप से तैयार होंगे।
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="terms-column">
+
+                <div class="term-box">
+                    <p>
+                        <strong>6.&nbsp;</strong>
+                        Do not open multiple tabs during the quiz.
+                        /
+                        क्विज़ के दौरान कई टैब न खोलें।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>7.&nbsp;</strong>
+                        Answers cannot be changed after submission.
+                        /
+                        सबमिट करने के बाद उत्तर बदले नहीं जा सकते।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>8.&nbsp;</strong>
+                        Use a stable internet connection for better experience.
+                        /
+                        बेहतर अनुभव हेतु स्थिर इंटरनेट का उपयोग करें।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>9.&nbsp;</strong>
+                        Leaderboard rankings depend on score and correct answers.
+                        /
+                        लीडरबोर्ड रैंक स्कोर और सही उत्तरों के आधार पर निर्धारित की जाएगी।
+                    </p>
+                </div>
+
+                <div class="term-box">
+                    <p>
+                        <strong>10.&nbsp;</strong>
+                        Any unfair activity may disqualify the participant.
+                        /
+                        अनुचित गतिविधि करने पर प्रतिभागी अयोग्य हो सकता है।
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Quiz hub</p>
+    </footer>
+    
+</body>
+
+</html>

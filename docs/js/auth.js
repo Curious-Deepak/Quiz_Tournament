@@ -18,8 +18,6 @@ function protectPage() {
         if (payload.exp < currentTime) {
 
             localStorage.removeItem("token");
-
-            alert("Session expired. Please login again.");
             window.location.replace("login.html");
         }
 
