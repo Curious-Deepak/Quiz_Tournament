@@ -25,9 +25,9 @@ async function handlePlay(quizId) {
     const data = await response.json();
 
     if (data.submitted) {
-      window.location.replace(`result.html?quizId=${quizId}`);
+      window.location.href = `result.html?quizId=${quizId}`;
     } else {
-      window.location.replace(`t&c.html?quizId=${quizId}`);
+      window.location.href = `t&c.html?quizId=${quizId}`;
     }
 
   } catch (error) {
