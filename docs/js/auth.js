@@ -16,13 +16,22 @@ function protectPage() {
         const currentTime = Date.now() / 1000;
 
         if (payload.exp < currentTime) {
-
             localStorage.removeItem("token");
             window.location.replace("login.html");
+            return;
+        }
+
+        const role = payload.role;
+
+        if (window.location.pathname.includes("adminDashboard")) {
+            if (role !== "ADMIN") {
+                localStorage.removeItem("token");
+                window.location.replace("index.html");
+                return;
+            }
         }
 
     } catch (error) {
-
         localStorage.removeItem("token");
         window.location.replace("login.html");
     }
@@ -49,7 +58,6 @@ function handleNavProtection() {
         });
     };
 
-    // DOM is ready check
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", applyProtection);
     } else {

@@ -24,8 +24,32 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     }
 
     if (res.ok && result.token) {
-        localStorage.setItem("token", result.token);
-        window.location.replace("index.html");
+
+        const token = result.token;
+        localStorage.setItem("token", token);
+
+        const decoded = jwt_decode(token);
+        let role =
+            decoded.role ||
+            (decoded.roles ? decoded.roles[0] : null) ||
+            decoded.authorities ||
+            decoded.scope;
+
+        if (!role) {
+            localStorage.removeItem("token");
+            window.location.replace("login.html");
+        }
+
+        if (role.includes("ADMIN")) {
+            window.location.replace("adminDashboard.html");
+        }
+        else if (role.includes("USER")) {
+            window.location.replace("index.html");
+        }
+        else {
+            localStorage.removeItem("token");
+            window.location.replace("login.html");
+        }
     } else {
         showLoginError(result.message || " Invalid email or password ");
 
