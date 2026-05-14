@@ -1,10 +1,10 @@
 // No Page Reloading
-window.onbeforeunload = function (e) {
+window.addEventListener("beforeunload", function (e) {
     if (!isSubmitted) {
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = "";
     }
-};
+});
 
 let quizData = [];
 let currentIdx = 0;

@@ -3,7 +3,57 @@ protectPage();
 function protectPage() {
 
     const token = localStorage.getItem("token");
+    const currentPath = window.location.pathname;
+    const isAuthPage = currentPath.includes("login.html");
 
+    const adminPages = [
+        "adminDashboard.html",
+        "manageUser.html",
+        "manageQuiz.html",
+        "createQuiz.html",
+        "addQuestions.html",
+        "checkLeaderboard.html"
+    ];
+
+    const userPages = [
+        "index.html",
+        "profile.html",
+        "quiz.html",
+        "leaderboard.html",
+        "t&c.html",
+        "closedQuiz.html",
+        "result.html"
+    ];
+
+    // Login Page 
+    if (isAuthPage) {
+
+        if (token) {
+
+            try {
+
+                const payload = JSON.parse(atob(token.split(".")[1]));
+
+                const role = payload.role;
+
+                if (role === "ADMIN") {
+                    window.location.replace("adminDashboard.html");
+                    return;
+
+                } else {
+                    window.location.replace("index.html");
+                    return;
+                }
+
+            }
+            catch (e) {
+                localStorage.clear();
+            }
+        }
+        return;
+    }
+
+    // Protected Page 
     if (!token) {
         window.location.replace("login.html");
         return;
@@ -11,31 +61,35 @@ function protectPage() {
 
     try {
 
-        const payload = JSON.parse(atob(token.split('.')[1]));
-
-        const currentTime = Date.now() / 1000;
-
-        if (payload.exp < currentTime) {
-            localStorage.removeItem("token");
-            window.location.replace("login.html");
-            return;
-        }
+        const payload = JSON.parse(atob(token.split(".")[1]));
 
         const role = payload.role;
 
-        if (window.location.pathname.includes("adminDashboard")) {
-            if (role !== "ADMIN") {
-                localStorage.removeItem("token");
-                window.location.replace("index.html");
-                return;
+        if (role === "USER") {
+            for (let page of adminPages) {
+                if (currentPath.includes(page)) {
+                    window.location.replace("index.html");
+                    return;
+                }
             }
         }
 
-    } catch (error) {
+        if (role === "ADMIN") {
+            for (let page of userPages) {
+                if (currentPath.includes(page)) {
+                    window.location.replace("adminDashboard.html");
+                    return;
+                }
+            }
+        }
+
+    }
+    catch (error) {
         localStorage.removeItem("token");
         window.location.replace("login.html");
     }
 }
+
 
 // Nav Protection 
 function handleNavProtection() {
