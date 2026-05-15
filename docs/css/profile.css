@@ -133,13 +133,14 @@ main {
 
 .edit-icon {
     position: absolute;
-    bottom: 5px;
-    right: 1px;
+    bottom: 4px;
+    right: 2px;
     font-size: 15px;
     background: black;
     color: white;
     border-radius: 50%;
-    padding: 6px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 /* Badges Section */

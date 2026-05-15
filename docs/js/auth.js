@@ -77,7 +77,7 @@ function protectPage() {
         if (role === "ADMIN") {
             for (let page of userPages) {
                 if (currentPath.includes(page)) {
-                    window.location.replace("adminDashboard.html");
+                    window.location.replace("login.html");
                     return;
                 }
             }
