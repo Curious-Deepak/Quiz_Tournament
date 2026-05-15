@@ -86,12 +86,12 @@ main {
 
 /* Left Panel */
 .profile-left {
-    width: 30%;
+    width: 35%;
 }
 
 /* Right Panel */
 .profile-right {
-    width: 70%;
+    width: 65%;
 }
 
 /* Account Box */
@@ -114,14 +114,22 @@ main {
 .user-info {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: center;
+    gap: 20px;
 }
 
 .user-data {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 5px;
-    font-size: 16px;
+    font-size: 15px;
+}
+
+.user-data h2,
+.user-data p {
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Profile Icon */
@@ -259,7 +267,7 @@ main {
 .badge-content {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 .badge-data {
@@ -267,6 +275,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
     font-size: 18px;
 }
 
