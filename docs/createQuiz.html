@@ -76,6 +76,7 @@
                             <span class="required">*</span>
                         </label>
                         <input type="number" class="form-control" id="noOfQuestions" min=1 required>
+                        <small id="questionError" class="text-danger d-block mt-1"></small>
                     </div>
 
                     <div class="col-md-6 mb-4">
@@ -84,6 +85,7 @@
                             <span class="required">*</span>
                         </label>
                         <input type="number" class="form-control" id="duration" min=1 required>
+                        <small id="durationError" class="text-danger d-block mt-1"></small>
                     </div>
 
                     <div class="col-md-6 mb-4">
@@ -92,8 +94,9 @@
                         </label>
                         <input type="file" class="form-control" id="imgUrl" accept="image/*">
                         <small class="text-muted d-block mt-2">
-                            Try to keep image size above 1100px x 700px
+                            Try to keep image dimensions above 1100px x 700px and size below 10
                         </small>
+                        <small id="imageError" class="text-danger d-block mt-1"></small>
                     </div>
 
                     <div class="col-md-3 mb-4">
@@ -102,6 +105,7 @@
                             <span class="required">*</span>
                         </label>
                         <input type="date" class="form-control" id="startDate" required>
+                        <small id="startDateError" class="text-danger d-block mt-1"></small>
                     </div>
 
                     <div class="col-md-3 mb-4">
@@ -110,6 +114,7 @@
                             <span class="required">*</span>
                         </label>
                         <input type="date" class="form-control" id="endDate" required>
+                        <small id="endDateError" class="text-danger d-block mt-1"></small>
                     </div>
 
                 </div>
