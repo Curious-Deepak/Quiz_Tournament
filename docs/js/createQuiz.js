@@ -121,6 +121,7 @@ async function createQuiz(event) {
         const result = await response.text();
 
         if (response.ok) {
+            window.location.replace("adminDashboard.html");
             console.log(result);
             document.getElementById("quizForm").reset();
         }
