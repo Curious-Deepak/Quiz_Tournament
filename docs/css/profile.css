@@ -131,9 +131,19 @@ main {
     color: #777;
 }
 
+.user-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .edit-icon {
     position: absolute;
-    bottom: 4px;
+    bottom: -2px;
     right: 2px;
     font-size: 15px;
     background: black;
@@ -141,9 +151,86 @@ main {
     border-radius: 50%;
     padding: 5px;
     cursor: pointer;
+    transition: 0.5s;
 }
 
-/* Badges Section */
+.edit-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Profile Icon Popup */
+.avatar-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.avatar-popup.active {
+    display: flex;
+}
+
+/* POPUP BOX */
+.avatar-box {
+    width: 400px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    animation: popupShow 0.3s ease;
+}
+
+@keyframes popupShow {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* HEADER */
+.avatar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-popup {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* GRID */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+/* AVATAR IMAGES */
+.avatar-option {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: 0.5s;
+}
+
+.avatar-option:hover {
+    transform: scale(1.09);
+    border-color: #0965f0ee;
+}
+
 .badges-box {
     margin-top: 20px;
     padding: 20px;
@@ -169,7 +256,6 @@ main {
     transition: 0.3s;
 }
 
-/* Badge Content */
 .badge-content {
     display: flex;
     align-items: center;
@@ -252,7 +338,7 @@ main {
 
 .logout-btn:hover {
     color: white;
-    background:  #e11d48;
+    background: #e11d48;
     transform: translateY(-5px);
 }
 

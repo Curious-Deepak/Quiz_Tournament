@@ -11,11 +11,11 @@ function getAuthHeaders() {
     };
 }
 
-window.onload = () => {
+window.onload = async () => {
 
-    loadProfile();
+    await loadProfile();
+    initializeAvatarSystem();
     loadActivities("active");
-
     setActiveTab("active");
 
     // Tab Switching
@@ -45,6 +45,8 @@ async function loadProfile() {
         document.getElementById("total-points").innerText = data.totalPoints || 0;
         document.getElementById("total-quizzes").innerText = data.totalQuizzes || 0;
         document.getElementById("badge-level").innerText = data.badgeLevel || "Beginner";
+
+        return data;
 
     } catch (err) {
         console.error("Profile load error:", err);
@@ -134,4 +136,48 @@ function logout() {
     window.location.replace("login.html");
 }
 
+// Avatar Selection 
+function initializeAvatarSystem() {
+
+    const editIcon = document.querySelector(".edit-icon");
+    const popup = document.getElementById("avatarPopup");
+    const closePopup = document.getElementById("closePopup");
+    const avatarOptions = document.querySelectorAll(".avatar-option");
+    const userImg = document.querySelector(".user-img");
+    const userEmail = document.getElementById("user-email").innerText;
+
+    const avatarKey = "userAvatar_" + userEmail;
+    const savedAvatar = localStorage.getItem(avatarKey);
+
+    if (savedAvatar) {
+        userImg.src = savedAvatar;
+    }
+
+    editIcon.addEventListener("click", () => {
+        popup.classList.add("active");
+    });
+
+    closePopup.addEventListener("click", () => {
+        popup.classList.remove("active");
+    });
+
+    popup.addEventListener("click", (e) => {
+
+        if (e.target === popup) {
+            popup.classList.remove("active");
+        }
+
+    });
+
+    avatarOptions.forEach((avatar) => {
+        avatar.addEventListener("click", () => {
+            const selectedAvatar = avatar.getAttribute("src");
+            userImg.src = selectedAvatar;
+            localStorage.setItem(avatarKey, selectedAvatar);
+            popup.classList.remove("active");
+        });
+
+    });
+
+}
 
