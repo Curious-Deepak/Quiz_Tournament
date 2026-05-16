@@ -27,30 +27,70 @@
 
     <div class="page-container">
 
+        <div class="page-header">
+            <i class="bi bi-plus-square-fill win-icon" onclick="goHome()"></i>
+            <h2>Add Questions</h2>
+        </div>
+
         <div class="quiz-card">
 
             <h3 class="text-center mb-3 fw-bold">Create Quiz Questions</h3>
 
-            <form id="quizForm">
+
+            <!-- Quiz ID Check Section -->
+            <div class="mb-4">
+                <label class="form-label fw-bold" style="font-size: 17px;">
+                    Enter Quiz ID
+                </label>
+
+                <input type="number" id="quizIdInput" class="form-control" placeholder="Enter Quiz ID" required>
+                <small id="quizError" class="text-danger fw-semibold mt-3 d-block" style="font-size:17px;">
+                </small>
+
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-dark" onclick="checkQuiz()">
+                        Check Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Quiz Heading -->
+            <h3 id="quizHeading" class="fw-bold mb-3" style="color: green;">
+            </h3>
+
+
+            <form id="quizForm" style="display:none;">
 
                 <div id="questionContainer">
 
                     <div class="question-block">
-                        <input type="text" class="form-control mb-4" placeholder="Enter question">
+                        <input type="text" class="form-control mb-4 question-text" placeholder="Enter question"
+                            required>
 
                         <h6 class="form-label fw-bold">Options</h6>
-                        <input type="text" class="form-control mb-3" placeholder="Option 1">
-                        <input type="text" class="form-control mb-3" placeholder="Option 2">
-                        <input type="text" class="form-control mb-3" placeholder="Option 3">
-                        <input type="text" class="form-control mb-3" placeholder="Option 4">
+                        <input type="text" class="form-control mb-3 opt" placeholder="Option 1" required>
+                        <input type="text" class="form-control mb-3 opt" placeholder="Option 2" required>
+                        <input type="text" class="form-control mb-3 opt" placeholder="Option 3" required>
+                        <input type="text" class="form-control mb-4 opt" placeholder="Option 4" required>
+
+                        <h6 class="form-label fw-bold">Correct Option</h6>
+                        <select class="form-select correct-opt mt-2" required>
+                            <option value="" selected disabled hidden>Select Correct Option</option>
+                            <option value="0">Option 1 is Correct</option>
+                            <option value="1">Option 2 is Correct</option>
+                            <option value="2">Option 3 is Correct</option>
+                            <option value="3">Option 4 is Correct</option>
+                        </select>
                     </div>
 
                 </div>
 
                 <!-- Add Question Button -->
-                <button type="button" class="add-btn" onclick="addQuestion()">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
+                <div class="text-center mt-3">
+                    <button type="button" class="add-btn" onclick="addQuestion()">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
 
                 <div class="text-center mt-4">
                     <button type="submit" class="submit-btn">Save Quiz</button>
@@ -59,7 +99,6 @@
             </form>
 
         </div>
-
     </div>
 
 </body>
