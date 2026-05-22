@@ -2,7 +2,7 @@
 
 ***A Small Step Towards Online Examination System***
 
-Quiz Hub is a full-stack quiz tournament platform designed to conduct online quizzes, manage participants, evaluate results instantly, and provide a smooth quiz experience for both administrators and users.
+Quiz Hub is a full-stack quiz tournament platform designed to conduct online quizzes, manage participants, evaluate results instantly, live leaderboard, and provide a smooth quiz experience for both administrators and users.
 
 ---
 
@@ -26,6 +26,7 @@ Quiz Hub is a full-stack quiz tournament platform designed to conduct online qui
 - Automated answer checking
 - Real-time result generation
 - Participant tracking
+- Live leaderboard for competition tracking
 - Dynamic quiz management
 - Interactive user experience
 
@@ -210,4 +211,6 @@ send to backend
 - Dynamic image serving
 - WebMvc resource handler integration
 - Flexible asset management
+
+
 
