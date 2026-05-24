@@ -188,8 +188,8 @@ function connectWebSocket() {
 
       const data = JSON.parse(message.body);
 
-      renderLatest(data.latest);
-      renderOngoing(data.ongoing);
+      renderLatestQuizzes(data.latest);
+      renderOngoingQuizzes(data.ongoing);
     });
 
   }, function (error) {
